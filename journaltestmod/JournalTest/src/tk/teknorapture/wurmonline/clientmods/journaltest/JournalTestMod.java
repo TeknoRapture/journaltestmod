@@ -30,10 +30,17 @@ import com.wurmonline.client.settings.SavePosManager;
 
 import com.wurmonline.client.renderer.gui.JunkJournal;
 
-public class JournalTestMod implements WurmMod, Initable, PreInitable {
+public class JournalTestMod implements WurmMod, Initable, PreInitable, Configurable {
 
 	private static Logger logger = Logger.getLogger(JournalTestMod.class.getName());
 
+
+	@Override
+	public void configure(Properties properties) {
+		// TODO Auto-generated method stub
+		int x = 0;
+	}
+	
 	@Override
 	public void preInit() {
 	}
@@ -95,6 +102,7 @@ public class JournalTestMod implements WurmMod, Initable, PreInitable {
 			}	
 		}.run();		
 	}
+
 
 }
 
