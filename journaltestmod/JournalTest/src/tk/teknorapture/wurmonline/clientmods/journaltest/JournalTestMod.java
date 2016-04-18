@@ -30,9 +30,9 @@ import com.wurmonline.client.settings.SavePosManager;
 
 import com.wurmonline.client.renderer.gui.JunkJournal;
 
-public class journaltestmod implements WurmMod, Initable, PreInitable {
+public class JournalTestMod implements WurmMod, Initable, PreInitable {
 
-	
+	private static Logger logger = Logger.getLogger(JournalTestMod.class.getName());
 
 	@Override
 	public void preInit() {
@@ -70,10 +70,13 @@ public class journaltestmod implements WurmMod, Initable, PreInitable {
 			@Override
 			public void run() {
 				try {
+					
 					//World world = ReflectionUtil.getPrivateField(hud, ReflectionUtil.getField(hud.getClass(), "world"));
 		
 					//LiveMapWindow liveMapWindow = new LiveMapWindow(world);
 					//liveMap = liveMapWindow;///local to maintain it when its hidden?
+					
+					logger.log(Level.WARNING, "initJournalTest started."); //Level.info probably isn't displayed
 					
 					JunkJournal junkJournal = new JunkJournal();
 					
