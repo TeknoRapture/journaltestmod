@@ -26,6 +26,7 @@ import org.gotti.wurmunlimited.modloader.interfaces.WurmMod;
 import com.wurmonline.client.renderer.gui.HeadsUpDisplay;
 import com.wurmonline.client.renderer.gui.MainMenu;
 import com.wurmonline.client.renderer.gui.WurmComponent;
+import com.wurmonline.client.renderer.gui.JournalWindow;
 import com.wurmonline.client.settings.SavePosManager; 
 
 import com.wurmonline.client.renderer.gui.JunkJournal;
@@ -33,7 +34,7 @@ import com.wurmonline.client.renderer.gui.JunkJournal;
 public class JournalTestMod implements WurmMod, Initable, PreInitable, Configurable {
 
 	private static Logger logger = Logger.getLogger(JournalTestMod.class.getName());
-
+	private Object journal;
 
 	@Override
 	public void configure(Properties properties) {
@@ -70,7 +71,7 @@ public class JournalTestMod implements WurmMod, Initable, PreInitable, Configura
 //		HookManager.getInstance().registerHook("com.wurmonline.client.console.WurmConsole", "handleInput2", "(Ljava/lang/String;Z)V",
 //		new InvocationHandlerFactory() {		
 //
-//		handle the esc menu click...I think...
+//		handle the esc menu click, and set up the GUI and Journal
 		
 	private void initJournalTest(HeadsUpDisplay hud) {
 		new Runnable() {		
@@ -83,18 +84,22 @@ public class JournalTestMod implements WurmMod, Initable, PreInitable, Configura
 					//LiveMapWindow liveMapWindow = new LiveMapWindow(world);
 					//liveMap = liveMapWindow;///local to maintain it when its hidden?
 					
-					logger.log(Level.WARNING, "initJournalTest started."); //Level.info probably isn't displayed
+					logger.log(Level.INFO, "initJournalTest started."); //Level.info probably isn't displayed
 					
-					JunkJournal junkJournal = new JunkJournal();
+					//JunkJournal junkJournal = new JunkJournal();
+					
+					JournalWindow journalWindow = new JournalWindow();
+					
+					journal = journalWindow;//why not just cast to object?
 					
 					MainMenu mainMenu = ReflectionUtil.getPrivateField(hud, ReflectionUtil.getField(hud.getClass(), "mainMenu"));
-					mainMenu.registerComponent("Journal", junkJournal);
+					mainMenu.registerComponent("Journal", journalWindow);
 		
 					List<WurmComponent> components = ReflectionUtil.getPrivateField(hud, ReflectionUtil.getField(hud.getClass(), "components"));
-					components.add(junkJournal);
+					components.add(journalWindow);
 					
 					SavePosManager savePosManager = ReflectionUtil.getPrivateField(hud, ReflectionUtil.getField(hud.getClass(), "savePosManager"));
-					savePosManager.registerAndRefresh(junkJournal, "livemapwindow");
+					savePosManager.registerAndRefresh(journalWindow, "journalwindow");
 				}
 				catch (IllegalArgumentException | IllegalAccessException | ClassCastException | NoSuchFieldException e) {
 					throw new RuntimeException(e);

@@ -5,5 +5,8 @@
 	<classpathentry kind="lib" path="src/javassist.jar"/>
 	<classpathentry kind="lib" path="imports/client-patched.jar"/>
 	<classpathentry kind="lib" path="imports/common.jar"/>
+	<classpathentry kind="lib" path="F:/Program Files (x86)/Steam/SteamApps/common/Wurm Unlimited/WurmLauncher/lib/lwjgl_util-2.9.1.jar"/>
+	<classpathentry kind="lib" path="F:/Program Files (x86)/Steam/SteamApps/common/Wurm Unlimited/WurmLauncher/lib/lwjgl-2.9.1.jar"/>
+	<classpathentry kind="lib" path="F:/Program Files (x86)/Steam/SteamApps/common/Wurm Unlimited/WurmLauncher/lib/lwjgl-natives-windows-2.9.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
