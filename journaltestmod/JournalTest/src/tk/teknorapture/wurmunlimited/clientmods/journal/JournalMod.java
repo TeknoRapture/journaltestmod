@@ -1,7 +1,7 @@
 /**
- * 
+ * Client side Journal Mod
  */
-package tk.teknorapture.wurmonline.clientmods.journaltest;
+package tk.teknorapture.wurmunlimited.clientmods.journal;
 
 /**
  * @author Teknorapture
@@ -31,8 +31,10 @@ import com.wurmonline.client.settings.SavePosManager;
 
 import com.wurmonline.client.renderer.gui.JunkJournal;
 
-public class JournalTestMod implements WurmMod, Initable, PreInitable, Configurable {
+import tk.teknorapture.wurmunlimited.clientmods.journaltest.JournalTestMod;
+import tk.teknorapture.wurmunlimited.clientmods.teknoswurmapi.*;
 
+public class JournalMod implements WurmMod, Initable, PreInitable, Configurable {
 	private static Logger logger = Logger.getLogger(JournalTestMod.class.getName());
 	private Object journal;
 
@@ -49,7 +51,7 @@ public class JournalTestMod implements WurmMod, Initable, PreInitable, Configura
 	@Override
 	public void init() {
 		
-		// VOID com.wurmonline.client.renderer.gui.HeadsUpDisplay.init(int, int) (thanks alot ago...putting that void in front would have really helped me figure out the "(II)V" thing lol)
+		//Grab HUD hook
 		HookManager.getInstance().registerHook("com.wurmonline.client.renderer.gui.HeadsUpDisplay", "init", "(II)V",
 				new InvocationHandlerFactory() {
 				@Override
@@ -107,9 +109,19 @@ public class JournalTestMod implements WurmMod, Initable, PreInitable, Configura
 			}	
 		}.run();		
 	}
-
-
+	
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

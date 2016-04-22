@@ -12,13 +12,13 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import tk.teknorapture.wurmonline.clientmods.journaltest.*;
-
 import com.wurmonline.client.options.Options;
 import com.wurmonline.client.resources.textures.ImageTexture;
 import com.wurmonline.client.resources.textures.ImageTextureLoader;
 import com.wurmonline.client.resources.textures.ResourceTexture;
 import com.wurmonline.client.resources.textures.ResourceTextureLoader;
+
+import tk.teknorapture.wurmunlimited.clientmods.journaltest.*;
 
 public class JournalWindow extends WWindow  {
 	

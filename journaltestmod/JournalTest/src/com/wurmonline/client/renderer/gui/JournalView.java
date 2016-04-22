@@ -3,13 +3,9 @@
  */
 package com.wurmonline.client.renderer.gui;
 
-/**
- * @author Teknorapture
- * @email teknorapture@gmail.com
- */
-import tk.teknorapture.wurmonline.clientmods.journaltest.*;
-
 import org.lwjgl.opengl.GL11;
+
+import tk.teknorapture.wurmunlimited.clientmods.journaltest.*;
 
 public class JournalView extends FlexComponent{
 

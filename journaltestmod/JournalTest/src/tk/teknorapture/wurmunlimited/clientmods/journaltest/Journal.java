@@ -1,7 +1,7 @@
 /**
  * 
  */
-package tk.teknorapture.wurmonline.clientmods.journaltest;
+package tk.teknorapture.wurmunlimited.clientmods.journaltest;
 
 /**
  * @author Teknoraptu

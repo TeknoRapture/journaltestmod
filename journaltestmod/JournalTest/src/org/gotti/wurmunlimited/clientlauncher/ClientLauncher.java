@@ -1,9 +1,9 @@
 package org.gotti.wurmunlimited.clientlauncher;
 
+import org.gotti.wurmunlimited.modloader.classhooks.HookManager;
+
 import javassist.ClassPool;
 import javassist.Loader;
-
-import org.gotti.wurmunlimited.modloader.classhooks.HookManager;
 
 public class ClientLauncher {
 
