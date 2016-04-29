@@ -2,22 +2,39 @@
  * 
  */
 package com.wurmonline.client.renderer.gui;
+/**
+ * @author Teknorapture
+ * @email teknorapture@gmail.com
+ * 
+ * Parent view of the pages for the Journal mod
+ */
 
 import org.lwjgl.opengl.GL11;
 
-import tk.teknorapture.wurmunlimited.clientmods.journaltest.*;
+import com.wurmonline.client.renderer.gui.JournalIndexPageView;
+
+import tk.teknorapture.wurmunlimited.clientmods.journal.*;
 
 public class JournalView extends FlexComponent{
 
 	private final Journal journal;
+	private JournalIndexPageView indexPageView;//probably should be a final type
 	
 	JournalView(String name, Journal journal, int width, int height)
 	{
 		super(name);
 		setInitialSize(width, height, false);
-		sizeFlags = FlexComponent.FIXED_WIDTH | FlexComponent.FIXED_HEIGHT;
-		
+		sizeFlags = FlexComponent.FIXED_WIDTH | FlexComponent.FIXED_HEIGHT;//change for resizable
+		 
 		this.journal = journal;
+		
+		this.indexPageView = new JournalIndexPageView( width, height, journal);
+		
+		if(this.journal.getFirstRun())
+		{
+			//placeholder
+		}
+		
 		
 	}
 	

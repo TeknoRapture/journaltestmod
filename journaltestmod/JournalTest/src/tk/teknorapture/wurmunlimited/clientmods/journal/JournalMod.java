@@ -6,6 +6,7 @@ package tk.teknorapture.wurmunlimited.clientmods.journal;
 /**
  * @author Teknorapture
  * @email teknorapture@gmail.com
+ * Journal mod main class
  */
 
 import java.lang.reflect.InvocationHandler;
@@ -29,13 +30,8 @@ import com.wurmonline.client.renderer.gui.WurmComponent;
 import com.wurmonline.client.renderer.gui.JournalWindow;
 import com.wurmonline.client.settings.SavePosManager; 
 
-import com.wurmonline.client.renderer.gui.JunkJournal;
-
-import tk.teknorapture.wurmunlimited.clientmods.journaltest.JournalTestMod;
-import tk.teknorapture.wurmunlimited.clientmods.teknoswurmapi.*;
-
 public class JournalMod implements WurmMod, Initable, PreInitable, Configurable {
-	private static Logger logger = Logger.getLogger(JournalTestMod.class.getName());
+	public static Logger logger = Logger.getLogger(JournalMod.class.getName());
 	private Object journal;
 
 	@Override
@@ -51,7 +47,7 @@ public class JournalMod implements WurmMod, Initable, PreInitable, Configurable 
 	@Override
 	public void init() {
 		
-		//Grab HUD hook
+		//Grab HUD hook and initJournal
 		HookManager.getInstance().registerHook("com.wurmonline.client.renderer.gui.HeadsUpDisplay", "init", "(II)V",
 				new InvocationHandlerFactory() {
 				@Override
@@ -62,7 +58,7 @@ public class JournalMod implements WurmMod, Initable, PreInitable, Configurable 
 						public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 							method.invoke(proxy, args);
 	
-							initJournalTest((HeadsUpDisplay) proxy);
+							initJournal((HeadsUpDisplay) proxy);
 	
 							return null;
 						}
@@ -75,13 +71,13 @@ public class JournalMod implements WurmMod, Initable, PreInitable, Configurable 
 //
 //		handle the esc menu click, and set up the GUI and Journal
 		
-	private void initJournalTest(HeadsUpDisplay hud) {
+	private void initJournal(HeadsUpDisplay hud) {
 		new Runnable() {		
 			@Override
 			public void run() {
 				try {
 					
-					//World world = ReflectionUtil.getPrivateField(hud, ReflectionUtil.getField(hud.getClass(), "world"));
+					//World world = ReflectionUtil.getPrivateField(hud, ReflectionUtil.getField(hud.getClass(), "world"));//not needed
 		
 					//LiveMapWindow liveMapWindow = new LiveMapWindow(world);
 					//liveMap = liveMapWindow;///local to maintain it when its hidden?
@@ -109,7 +105,6 @@ public class JournalMod implements WurmMod, Initable, PreInitable, Configurable 
 			}	
 		}.run();		
 	}
-	
 }
 
 
