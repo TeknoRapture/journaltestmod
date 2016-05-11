@@ -35,9 +35,16 @@ import java.nio.file.*;
 public class Journal {
 
 	public static final boolean RESIZABLE = false;
+	//public static final String
+	
+	public static Path journalDataPath;
+	public static Path journalModFolderPath;
+	
 	private static final boolean DEBUG = true;
 	private static final String INSTRUCTIONSFILE = "instructions.txt"; 
 	private static final String INSTRUCTIONSMAPPING = "text.instructions";
+	
+	private static Resources resources;
 	
 	private boolean firstRun = true;
 	/**
@@ -57,6 +64,11 @@ public class Journal {
 	public Journal()
 	{
 		super();
+		//resources = new Resources(aPackDir,packNames);
+		journalModFolderPath = Paths.get((Paths.get(".").toAbsolutePath()).toString(),"\\mods\\journal\\");
+		journalDataPath = getJournalDataPath(journalModFolderPath);
+		
+		
 		
 	}
 	
@@ -96,23 +108,7 @@ public class Journal {
 		///TEST *************************************************************************************************
 		
 		
-		ClassLoader loader = this.getClass().getClassLoader();
 		
-		String thisClassNameFixed = this.getClass().getName();
-		thisClassNameFixed = thisClassNameFixed.replace(".", "\\");
-
-		Path currentDir = Paths.get((Paths.get(".").toAbsolutePath()).toString(),"\\mods\\journal");
-		
-		if(DEBUG){
-		JournalMod.logger.log(Level.INFO,"currentDir.toAbsolutePath()"+currentDir.toAbsolutePath());
-		}
-		
-		//Create Journal data path
-		Path journalDataPath = Paths.get((Paths.get(".").toAbsolutePath()).toString(),"\\mods\\journal\\data");//TODO: Move to the player path
-		
-		if(DEBUG){
-		JournalMod.logger.log(Level.INFO,"journalDataPath="+journalDataPath);
-		}
 		
 		//See if data folder exists
 		if(Files.exists(journalDataPath))
@@ -171,6 +167,32 @@ public class Journal {
 		}
 		
 		return true;
+	}
+
+	/**
+	 * @return Path to the journal's data
+	 */
+	private Path getJournalDataPath(Path modFolderPath) {
+		//ClassLoader loader = this.getClass().getClassLoader();
+		
+		//String thisClassNameFixed = this.getClass().getName();
+		//thisClassNameFixed = thisClassNameFixed.replace(".", "\\");
+
+		//Path currentDir = Paths.get((Paths.get(".").toAbsolutePath()).toString(),"\\mods\\journal");
+		//Path currentDir = modFolderPath;
+		
+		if(DEBUG){
+		//JournalMod.logger.log(Level.INFO,"currentDir.toAbsolutePath()"+currentDir.toAbsolutePath());
+		}
+		
+		//Create Journal data path
+		//Path journalDataPath = Paths.get((Paths.get(".").toAbsolutePath()).toString(),"\\mods\\journal\\data");//TODO: Move to the player path?
+		Path journalDataPath = Paths.get(modFolderPath.toString(),"\\data");//TODO: Move to the player path?
+		
+		if(DEBUG){
+		JournalMod.logger.log(Level.INFO,"journalDataPath="+journalDataPath);
+		}
+		return journalDataPath;
 	}
 	
 	private void LogJarPaths(String pathToScan, String pathToJar) {
