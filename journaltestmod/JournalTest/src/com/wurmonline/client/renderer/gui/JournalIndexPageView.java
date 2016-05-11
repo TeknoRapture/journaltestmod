@@ -35,7 +35,7 @@ public class JournalIndexPageView extends FlexComponent {
 		
 		setInitialSize(width,height,false);
 		
-		if(!Journal.resizable)
+		if(!Journal.RESIZABLE)
 		{
 			sizeFlags= FlexComponent.FIXED_WIDTH | FlexComponent.FIXED_HEIGHT;// I wish there was a "fill available space" hopefully default is that...
 		}

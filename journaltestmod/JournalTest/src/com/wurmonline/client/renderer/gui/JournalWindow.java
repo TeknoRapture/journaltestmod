@@ -140,6 +140,7 @@ public class JournalWindow extends WWindow  {
 				}
 			}
 			if (url != null) {
+				Logger.getLogger(JournalWindow.class.getName()).log(Level.INFO,"ImageIO.read(url) url="+url.toString());
 				return ImageIO.read(url);
 			} else {
 				return null;
