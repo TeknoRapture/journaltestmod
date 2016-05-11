@@ -88,7 +88,7 @@ public class JournalMod implements WurmMod, Initable, PreInitable, Configurable 
 					
 					JournalWindow journalWindow = new JournalWindow();
 					
-					journal = journalWindow;//why not just cast to object?
+					journal = journalWindow;
 					
 					MainMenu mainMenu = ReflectionUtil.getPrivateField(hud, ReflectionUtil.getField(hud.getClass(), "mainMenu"));
 					mainMenu.registerComponent("Journal", journalWindow);

@@ -16,10 +16,10 @@ import java.util.stream.Stream;
 
 import org.gotti.wurmunlimited.modloader.classhooks.HookManager;
 
-import com.wurmonline.client.resources.ResourceUrl;
 import com.wurmonline.client.resources.*;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,6 +39,7 @@ public class Journal {
 	
 	public static Path journalDataPath;
 	public static Path journalModFolderPath;
+	public static final String MODFILENAME = "journal.jar";
 	
 	private static final boolean DEBUG = true;
 	private static final String INSTRUCTIONSFILE = "instructions.txt"; 
@@ -65,14 +66,31 @@ public class Journal {
 	{
 		super();
 		//resources = new Resources(aPackDir,packNames);
-		journalModFolderPath = Paths.get((Paths.get(".").toAbsolutePath()).toString(),"\\mods\\journal\\");
+		journalModFolderPath = Paths.get((Paths.get(".").toAbsolutePath()).toString(),File.separator+"mods"+File.separator+"journal"+File.separator);
 		journalDataPath = getJournalDataPath(journalModFolderPath);
 		
+		List<String> packNames = new ArrayList<String>();
+		packNames.add(MODFILENAME);
+		resources = getResources(journalModFolderPath,packNames);
+		//File aPackDir,List<String> packNames
 		
+		InitFileStructure(journalDataPath,resources);
 		
 	}
 	
 	
+	private Resources getResources(Path journalModFolderPath, List<String> packNames) {
+		File packFile = new File(journalModFolderPath.toUri());
+		
+		//TODO: Error Checking
+		
+		Resources resources = new Resources(packFile,packNames);
+		
+		//TODO: Error Checking
+		
+		return resources;
+	}
+
 	public void addNewPage() {
 		JournalMod.logger.log(Level.INFO, "addNewPageCalled");
 	}
@@ -93,9 +111,9 @@ public class Journal {
 		
 	}
 	
-	public boolean InitFileStructure()
+	public boolean InitFileStructure(Path journalDataPath, Resources res)
 	{
-		/// TEST *************************************************************************************************
+		/*/// TEST *************************************************************************************************
 		LogJarPaths("",Paths.get((Paths.get(".").toAbsolutePath()).toString(),"\\mods\\journal\\journal.jar").toString());
 		
 		//TestWriteInstructionsAsset();
@@ -106,9 +124,7 @@ public class Journal {
 		
 		TestResources(packFile,packNames);
 		///TEST *************************************************************************************************
-		
-		
-		
+		//*/
 		
 		//See if data folder exists
 		if(Files.exists(journalDataPath))
@@ -124,8 +140,6 @@ public class Journal {
 				//String testS = (test) ? "true":"false";
 				//JournalMod.logger.log(Level.INFO, "testS==null=" + testS );
 				
-				
-				
 			}
 			//do nothing return true
 			return true;
@@ -136,18 +150,15 @@ public class Journal {
 			try {
 				Files.createDirectories(journalDataPath);
 				
-				
 				if(DEBUG)
 				{
-					//a lil fun to test IO speed/memory hit
-					Files.write(Paths.get(journalDataPath + "\\test.txt"),GenerateTestLines());
+					//a lil fun to test IO speed/memory hit and index page
+					Files.write(Paths.get(journalDataPath + File.separator+"test.txt"),GenerateTestLines());
 				}
 				
 				//load Instructions
-				boolean instructionsOK = WriteInstructionsAsset();
+				boolean instructionsOK = writeInstructionsAsset(journalDataPath, res, this.INSTRUCTIONSMAPPING);
 				//List<String> lines = LoadInstructionsAsset();
-				
-				
 				
 				//and dump instructions .jrn (a standard .txt)
 				//Files.write(Paths.get(journalDataPath + "\\Instructions.jrn"),stream);//nope
@@ -160,7 +171,7 @@ public class Journal {
 				}
 				
 			} catch (IOException e) {
-				JournalMod.logger.log(Level.WARNING, "Journal failed to create /./mods/journal/data/ directory...no Journal for you!!! + " + e.toString());
+				JournalMod.logger.log(Level.WARNING, "Journal failed to create "+journalDataPath+" directory...no Journal for you!!! + " + e.toString());
 			}
 
 			//TODO: add a Finally??? (whatever javas equivalent is) to close the streams and IO stuff
@@ -187,12 +198,65 @@ public class Journal {
 		
 		//Create Journal data path
 		//Path journalDataPath = Paths.get((Paths.get(".").toAbsolutePath()).toString(),"\\mods\\journal\\data");//TODO: Move to the player path?
-		Path journalDataPath = Paths.get(modFolderPath.toString(),"\\data");//TODO: Move to the player path?
+		Path journalDataPath = Paths.get(modFolderPath.toString(),File.separator+"data");//TODO: Move to the player path?
 		
 		if(DEBUG){
 		JournalMod.logger.log(Level.INFO,"journalDataPath="+journalDataPath);
 		}
 		return journalDataPath;
+	}
+	
+	//writes Instructions from resource
+	private boolean writeInstructionsAsset(Path journalDataPath, Resources res, String instructionsAssetMapping) {
+		JournalMod.logger.log(Level.INFO,"Writing Instructions file to " + journalDataPath);
+		
+		BufferedReader br = null;
+		BufferedWriter bw = null;
+		try {
+			
+			
+			br = new BufferedReader(new InputStreamReader(res.getResourceAsStream(instructionsAssetMapping)));
+			bw = Files.newBufferedWriter(Paths.get(journalDataPath.toString(), File.separator + INSTRUCTIONSFILE));
+			
+			String line = "";
+			//List<String> lines = new ArrayList();
+			
+			//lines.addAll(br.lines().iterator());
+			
+			while ((line = br.readLine()) != null)
+			{
+				bw.write(line);
+				bw.newLine();
+			}
+			/*
+			 while ((line = reader.readLine()) != null) {
+			        doSomethingWith(line);
+			        writer.write(line);
+			        // must do this: .readLine() will have stripped line endings
+			        writer.newLine();
+			 }
+			 */
+			
+			//Files.write(Paths.get(journalDataPath + "\\"+INSTRUCTIONSFILE),br.lines());
+			//br.lines().
+			
+			
+		}catch (IOException e) {
+			JournalMod.logger.log(Level.WARNING,e.getMessage(), e);
+			return false;
+		}
+		try {
+			if(br != null){
+				br.close();
+			}
+			if(bw != null){
+				bw.close();
+			}
+		} catch (IOException e1) {
+			JournalMod.logger.log(Level.WARNING,e1.getMessage(), e1);
+		}
+		
+		return true;
 	}
 	
 	private void LogJarPaths(String pathToScan, String pathToJar) {
@@ -291,11 +355,6 @@ public class Journal {
 				}
 			}
 		}
-		
-		
-		
-		
-		
 		
 		
 		Logger.getLogger(Journal.class.getName()).log(Level.WARNING,"Only for Test purposes. TestResources() END");
@@ -412,98 +471,7 @@ public class Journal {
 		}
 		return false;
 	}
-	//writes Instructions from resource
-	private boolean WriteInstructionsAsset() {
-		InputStream in = null;
-		BufferedReader reader = null;
-		try {
-			
-			///not needed?
-			URL url = this.getClass().getClassLoader().getResource(INSTRUCTIONSFILE);
-			if (url == null && this.getClass().getClassLoader() == HookManager.getInstance().getLoader()) {
-				if(DEBUG){
-					Logger.getLogger(Journal.class.getName()).log(Level.INFO, "(url == null && this.getClass().getClassLoader() == HookManager.getInstance().getLoader()");
-				}
-				url = HookManager.getInstance().getClassPool().find(Journal.class.getName());
-				if (url != null) {
-					if(DEBUG){
-						Logger.getLogger(Journal.class.getName()).log(Level.INFO, "(url != null)");
-					}
-					String path = url.toString();
-					int pos = path.lastIndexOf('!');
-					if (pos != -1) {
-						if(DEBUG){
-							Logger.getLogger(Journal.class.getName()).log(Level.INFO, "(pos != -1)");
-						}
-						path = path.substring(0, pos) + "!/"+INSTRUCTIONSFILE;
-					}
-					url = new URL(path);
-				}
-			}
-			if (url != null) {
-				//return ImageIO.read(url);
-				//Files.rea
-				if(DEBUG)
-				{
-					Logger.getLogger(Journal.class.getName()).log(Level.INFO, "url.toString()=" + url.toString());
-				}
-				/*url = url.toExternalForm();
-				Logger.getLogger(Journal.class.getName()).log(Level.INFO, "url.toExternalForm()=" +url.toExternalForm());
-				Logger.getLogger(Journal.class.getName()).log(Level.INFO, "url.getFile()="+url.getFile());
-				Logger.getLogger(Journal.class.getName()).log(Level.INFO, "url.getPath()="+url.getPath());
-				//return this.getClass().getClassLoader().getResourceAsStream(url.getFile());//nope
-				Logger.getLogger(Journal.class.getName()).log(Level.INFO, "blah blah blah blah blah blah blah blah ");
-				return this.getClass().getClassLoader().getResourceAsStream("JournalTest/"+instructionsfile);
-				// */
-				
-				Logger.getLogger(Journal.class.getName()).log(Level.INFO, "Journal.java: instructionsfile url.getPath()="+url.getPath());
-				
-				in = getClass().getResourceAsStream(INSTRUCTIONSFILE); 
-				
-				if(in == null)
-				{
-					Logger.getLogger(Journal.class.getName()).log(Level.INFO, "getClass().getResourceAsStream("+INSTRUCTIONSFILE+");"+"returned null");
-				}
-				
-				if(in != null)
-				{
-					reader = new BufferedReader(new InputStreamReader(in));
-				}
-				
-				
-				
-				
-				return true;
-				
-			} else {
-				return false;
-			}
-			//*/
-			
-			//return this.getClass().getClassLoader()
-            //        .getResourceAsStream("/Instructions.txt");
-			
-		//} catch (IOException e) {
-		} catch (Exception e) {
-			Logger.getLogger(Journal.class.getName()).log(Level.WARNING, e.getMessage(), e);
-			return false;
-		}
-		finally
-		{
-			try {
-				if(in != null)
-				{
-					in.close();
-				}
-				if(reader != null)
-				{
-					reader.close();
-				}
-			} catch (IOException e) {
-				Logger.getLogger(Journal.class.getName()).log(Level.WARNING, e.getMessage(), e);
-			}
-		}
-	}
+
 
 	private List<String> GenerateTestLines()
 	{

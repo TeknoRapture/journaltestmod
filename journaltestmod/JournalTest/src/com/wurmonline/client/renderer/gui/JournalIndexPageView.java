@@ -42,9 +42,9 @@ public class JournalIndexPageView extends FlexComponent {
 		
 		
 		//Initialize the file structure
-		if(this.journal.getFirstRun())
+		if(this.journal.getFirstRun())//not needed
 		{
-			this.journal.InitFileStructure();
+			//this.journal.InitFileStructure();
 		}
 		
 		//set up main journal page panel, TODO: Put in separate class?  Probably not, each "page's" layout is pretty different.
