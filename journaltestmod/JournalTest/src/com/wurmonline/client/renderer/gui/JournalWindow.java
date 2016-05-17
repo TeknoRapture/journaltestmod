@@ -43,7 +43,9 @@ public class JournalWindow extends WWindow  {
 		this.journal = new Journal();
 		
 		resizable = false;
-		iconImage = loadIconImage();
+		//iconImage = loadIconImage();
+		iconImage = this.loadIconImageFromRes();
+		
 		
 		WurmArrayPanel<WButton> buttons = new WurmArrayPanel<WButton>("Journal buttons", WurmArrayPanel.DIR_VERTICAL);
 		buttons.setInitialSize(67, 500, false);
@@ -120,10 +122,15 @@ public class JournalWindow extends WWindow  {
 	public void toggle() {
 		hud.toggleComponent(this);
 	}
-		
+	
+	private BufferedImage loadIconImageFromRes()
+	{
+		return Journal.getIconImageFromResources();
+	}
+	
     /*  // ago's code BEGIN
      *  // I need to move this to my API 
-     * 
+     *  // why doesn't ago use the Resources system here?
      */
 	private BufferedImage loadIconImage() {
 		try {

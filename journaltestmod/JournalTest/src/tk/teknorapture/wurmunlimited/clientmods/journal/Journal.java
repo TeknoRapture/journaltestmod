@@ -18,6 +18,7 @@ import org.gotti.wurmunlimited.modloader.classhooks.HookManager;
 
 import com.wurmonline.client.resources.*;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -37,15 +38,16 @@ public class Journal {
 	public static final boolean RESIZABLE = false;
 	//public static final String
 	
-	public static Path journalDataPath;
-	public static Path journalModFolderPath;
+	private static Path journalDataPath;
+	private static Path journalModFolderPath;
 	public static final String MODFILENAME = "journal.jar";
 	
 	private static final boolean DEBUG = true;
 	private static final String INSTRUCTIONSFILE = "instructions.txt"; 
 	private static final String INSTRUCTIONSMAPPING = "text.instructions";
+	private static final String IMAGEICONMAPPING = "images.icons";
 	
-	private static Resources resources;
+	public static Resources resources;
 	
 	private boolean firstRun = true;
 	/**
@@ -66,27 +68,62 @@ public class Journal {
 	{
 		super();
 		//resources = new Resources(aPackDir,packNames);
-		journalModFolderPath = Paths.get((Paths.get(".").toAbsolutePath()).toString(),File.separator+"mods"+File.separator+"journal"+File.separator);
-		journalDataPath = getJournalDataPath(journalModFolderPath);
+		setJournalModFolderPath(Paths.get((Paths.get(".").toAbsolutePath()).toString(),File.separator+"mods"+File.separator+"journal"+File.separator));
+		setJournalDataPath(getJournalDataPath(getJournalModFolderPath()));
 		
 		List<String> packNames = new ArrayList<String>();
 		packNames.add(MODFILENAME);
-		resources = getResources(journalModFolderPath,packNames);
+		resources = getResources(getJournalModFolderPath(),packNames);
 		//File aPackDir,List<String> packNames
 		
-		InitFileStructure(journalDataPath,resources);
+		InitFileStructure(getJournalDataPath(),resources);
 		
 	}
 	
+	/**
+	 * @return the journalModFolderPath
+	 */
+	public static Path getJournalModFolderPath() {
+		return journalModFolderPath;
+	}
+
+	/**
+	 * @param journalModFolderPath the journalModFolderPath to set
+	 */
+	private static void setJournalModFolderPath(Path journalModFolderPath) {
+		Journal.journalModFolderPath = journalModFolderPath;
+	}
+	
+	/**
+	 * @return the journalDataPath
+	 */
+	public static Path getJournalDataPath() {
+		return journalDataPath;
+	}
+
+	/**
+	 * @param journalDataPath the journalDataPath to set
+	 */
+	private static void setJournalDataPath(Path journalDataPath) {
+		Journal.journalDataPath = journalDataPath;
+	}
+
+	public static BufferedImage getIconImageFromResources()
+	{
+		//TODO: Error Checking
+		return resources.getResourceAsImage(IMAGEICONMAPPING);
+	}
 	
 	private Resources getResources(Path journalModFolderPath, List<String> packNames) {
-		File packFile = new File(journalModFolderPath.toUri());
+		File packFolder = new File(journalModFolderPath.toUri());
 		
-		//TODO: Error Checking
+		if(!packFolder.exists()){
+			JournalMod.logger.log(Level.SEVERE, "packFolder doesn't exist for: " + journalModFolderPath.toString());
+			return null;
+		}
 		
-		Resources resources = new Resources(packFile,packNames);
-		
-		//TODO: Error Checking
+		Resources resources = new Resources(packFolder,packNames);
+		//I can't find a way to error check resources...maybe with "packnames"?
 		
 		return resources;
 	}
@@ -296,6 +333,9 @@ public class Journal {
 			    	if(jar != null){
 			    		jar.close();
 			    	}
+			    		else{
+			    			JournalMod.logger.log(Level.WARNING,"jar is null while trying to close");
+			    		}			    			
 				} catch (IOException e) {
 					JournalMod.logger.log(Level.WARNING,e.getMessage(), e);
 				}
