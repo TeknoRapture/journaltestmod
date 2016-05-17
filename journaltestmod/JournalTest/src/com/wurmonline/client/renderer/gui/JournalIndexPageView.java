@@ -5,6 +5,8 @@ package com.wurmonline.client.renderer.gui;
 
 import java.util.logging.Level;
 
+import com.wurmonline.client.GameCrashedException;
+
 /**
  * @author Teknorapture
  * @email teknorapture@gmail.com
@@ -19,6 +21,54 @@ public class JournalIndexPageView extends FlexComponent {
 	Journal journal;
 	WurmArrayPanel mainPagePanel;//main panel of the page
 	static String pagename = "JournalIndexPage";
+	
+	
+	private static final class JournalIndexListItem extends TreeListItem
+	{
+		private final String indexItemName;
+		private final String description;
+		
+		
+		
+		JournalIndexListItem(String name, String description){
+			indexItemName = name;
+			this.description = description;
+		}
+		
+		@Override
+		int compareTo(TreeListItem item, int sortOn) {
+			if (!(item instanceof JournalIndexListItem))
+		      {
+		        GameCrashedException.warn("Incompatible ITLI comparison");
+		        return 0;
+		      }
+			
+			
+			
+			// TODO Auto-generated method stub: Fix Later
+			
+			return 0;
+		}
+
+		@Override
+		String getName() {
+			// TODO Auto-generated method stub
+			return indexItemName;
+		}
+
+		@Override
+		String getParameter(int param) {
+			/*switch (param)
+		      {
+		      case 0: 
+		    	  return "not used";
+		      } */
+			return "not used";
+		}
+		
+	}
+	
+	
 	
 	/**
 	 * @param _name
@@ -49,11 +99,15 @@ public class JournalIndexPageView extends FlexComponent {
 			//this.journal.InitFileStructure();
 		}
 		*/
+		
 		//set up main journal page panel, TODO: Put in separate class?  Probably not, each "page's" layout is pretty different.
 		WurmArrayPanel<FlexComponent> mainPagePanel = new WurmArrayPanel(pagename, WurmArrayPanel.DIR_VERTICAL);
-	
+		
 		
 	}
 
-
+	private void testTreeList(WurmArrayPanel<FlexComponent> indexView)
+	{
+		
+	}
 }
