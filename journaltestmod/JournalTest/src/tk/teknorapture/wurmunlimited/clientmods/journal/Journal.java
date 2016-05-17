@@ -16,6 +16,8 @@ import java.util.stream.Stream;
 
 import org.gotti.wurmunlimited.modloader.classhooks.HookManager;
 
+import com.wurmonline.client.renderer.gui.JournalView;
+import com.wurmonline.client.renderer.gui.JournalWindow;
 import com.wurmonline.client.resources.*;
 
 import java.awt.image.BufferedImage;
@@ -46,6 +48,8 @@ public class Journal {
 	private static final String INSTRUCTIONSFILE = "instructions.txt"; 
 	private static final String INSTRUCTIONSMAPPING = "text.instructions";
 	private static final String IMAGEICONMAPPING = "images.icons";
+	private static JournalView journalView;
+	
 	
 	public static Resources resources;
 	
@@ -64,12 +68,19 @@ public class Journal {
 		this.firstRun = firstRun;
 	}
 	
-	public Journal()
+	private Journal()
+	{
+
+	}
+	
+	public Journal(JournalView journalView)
 	{
 		super();
 		//resources = new Resources(aPackDir,packNames);
 		setJournalModFolderPath(Paths.get((Paths.get(".").toAbsolutePath()).toString(),File.separator+"mods"+File.separator+"journal"+File.separator));
 		setJournalDataPath(getJournalDataPath(getJournalModFolderPath()));
+		
+		this.journalView  = journalView;
 		
 		List<String> packNames = new ArrayList<String>();
 		packNames.add(MODFILENAME);

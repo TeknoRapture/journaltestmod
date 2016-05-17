@@ -40,7 +40,8 @@ public class JournalWindow extends WWindow  {
 		setTitle("Journal");
 		mainPanel = new WurmBorderPanel("Journal");
 		
-		this.journal = new Journal();
+		JournalView journalView = new JournalView("Journal",ViewWidth,ViewHeight);
+		this.journal = new Journal(journalView);
 		
 		resizable = false;
 		//iconImage = loadIconImage();
@@ -100,8 +101,10 @@ public class JournalWindow extends WWindow  {
 			}
         }));
         
-		JournalView journalView = new JournalView("Journal",journal,ViewWidth,ViewHeight);
-		
+		//JournalView journalView = new JournalView("Journal",journal,ViewWidth,ViewHeight);
+        
+        
+        
 		//add the components and "View" to the panel
         mainPanel.setComponent(journalView, WurmBorderPanel.EAST);
 		mainPanel.setComponent(buttons, WurmBorderPanel.WEST);

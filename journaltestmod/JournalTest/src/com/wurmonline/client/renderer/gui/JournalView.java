@@ -17,24 +17,26 @@ import tk.teknorapture.wurmunlimited.clientmods.journal.*;
 
 public class JournalView extends FlexComponent{
 
-	private final Journal journal;
+	//private final Journal journal;
 	private JournalIndexPageView indexPageView;//probably should be a final type
 	
-	JournalView(String name, Journal journal, int width, int height)
+	//JournalView(String name, Journal journal, int width, int height)
+	JournalView(String name, int width, int height)
 	{
 		super(name);
 		setInitialSize(width, height, false);
 		sizeFlags = FlexComponent.FIXED_WIDTH | FlexComponent.FIXED_HEIGHT;//change for resizable
 		 
-		this.journal = journal;
+		//this.journal = journal;
 		
-		this.indexPageView = new JournalIndexPageView( width, height, journal);
+		this.indexPageView = new JournalIndexPageView( width, height);
 		
+		/*//not needed
 		if(this.journal.getFirstRun())
 		{
 			//placeholder
 		}
-		
+		*/
 		
 	}
 	
