@@ -32,6 +32,10 @@ public class JournalWindow extends WWindow  {
 
 	private static int ViewWidth = 400;
 	private static int ViewHeight = 500;
+	private static int ButtonWidth = 67;
+	private static int ButtonBorderW = 6;
+	private static int ButtonHeight = 30;
+	//TODO: TOO MANY STATICS!!!
 	
 	
 	public JournalWindow()
@@ -49,7 +53,7 @@ public class JournalWindow extends WWindow  {
 		
 		
 		WurmArrayPanel<WButton> buttons = new WurmArrayPanel<WButton>("Journal buttons", WurmArrayPanel.DIR_VERTICAL);
-		buttons.setInitialSize(67, 500, false);
+		buttons.setInitialSize(ButtonWidth + ButtonBorderW+20, ViewHeight, false);
 		
 		
 		//add buttons to the button panel
@@ -104,17 +108,17 @@ public class JournalWindow extends WWindow  {
 		//JournalView journalView = new JournalView("Journal",journal,ViewWidth,ViewHeight);
         
         
-        
 		//add the components and "View" to the panel
-        mainPanel.setComponent(journalView, WurmBorderPanel.EAST);
+        //*
+        
+        mainPanel.setComponent(journalView, WurmBorderPanel.CENTER);
 		mainPanel.setComponent(buttons, WurmBorderPanel.WEST);
 		
 		setComponent(mainPanel);
 		
-		setInitialSize(ViewWidth + 6 + 67, ViewHeight + 25, false);
+		setInitialSize(ViewWidth + ButtonBorderW + ButtonWidth, ViewHeight + 25, false);
 		layout();
 		//sizeFlags = FlexComponent.FIXED_WIDTH | FlexComponent.FIXED_HEIGHT;///makes it unresizable even for the shrink
-		
 	}
 	
 	public void closePressed()
@@ -165,12 +169,12 @@ public class JournalWindow extends WWindow  {
 	private WButton createButton(String label, String tooltip, int textureIndex, ButtonListener listener) {
 		if (iconImage != null) {
 			//BufferedImage image = iconImage.getSubimage(textureIndex * 32, 0, 32, 32);
-			BufferedImage image = iconImage.getSubimage(textureIndex * 67, 0, 67, 30);
+			BufferedImage image = iconImage.getSubimage(textureIndex * ButtonWidth, 0, ButtonWidth, ButtonHeight);
 			ImageTexture texture = ImageTextureLoader.loadNowrapNearestTexture(image);
-			return new JournalButton("", tooltip, 67, 30, texture, listener);
+			return new JournalButton("", tooltip, ButtonWidth, ButtonHeight, texture, listener);
 		} else {
 	        final String themeName = Options.guiSkins.options[Options.guiSkins.value()].toLowerCase(Locale.ENGLISH).replace(" ", "");
-			final ResourceTexture backgroundTexture = ResourceTextureLoader.getTexture("img.gui.button.mainmenu." + themeName);
+			final ResourceTexture backgroundTexture = ResourceTextureLoader.getTexture("img.gui.button.mainmenu." + themeName);//doesn't seem right change later
 			return new WTextureButton(label, tooltip, backgroundTexture, listener);
 		}
 	}

@@ -19,11 +19,15 @@ public class JournalButton extends WButton{
 	private final Texture texture;
 	
 	public JournalButton(final String label, final String hoverString, int width, int height, Texture texture, final ButtonListener buttonListener) {
-		super(label, buttonListener);
+		super(label, buttonListener, width, height);//didnt fix the half a button clickable problem
+		//super(label, buttonListener);//Wrong?
 		
-		this.sizeFlags = 0;
+		
+		this.sizeFlags = 0;//needed for a Rolf side effect?
 		setInitialSize(width, height, false);
 		this.sizeFlags = FlexComponent.FIXED_WIDTH | FlexComponent.FIXED_HEIGHT;
+		//this.sizeFlags = 3;
+		
 		
 		this.texture = texture;
 	}
