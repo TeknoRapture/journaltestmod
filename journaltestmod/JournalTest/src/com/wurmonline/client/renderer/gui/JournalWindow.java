@@ -44,7 +44,9 @@ public class JournalWindow extends WWindow  {
 		setTitle("Journal");
 		mainPanel = new WurmBorderPanel("Journal");
 		
+		//JournalView journalView = new JournalView("Journal",ViewWidth,ViewHeight);
 		JournalView journalView = new JournalView("Journal",ViewWidth,ViewHeight);
+		
 		this.journal = new Journal(journalView);
 		
 		resizable = false;

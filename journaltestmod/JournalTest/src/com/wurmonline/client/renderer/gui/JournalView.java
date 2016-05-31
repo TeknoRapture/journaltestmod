@@ -15,11 +15,18 @@ import com.wurmonline.client.renderer.gui.JournalIndexPageView;
 
 import tk.teknorapture.wurmunlimited.clientmods.journal.*;
 
-public class JournalView extends FlexComponent{
+public class JournalView extends WurmBorderPanel{
 
 	//private final Journal journal;
 	private JournalIndexPageView indexPageView;//probably should be a final type
 	
+	
+	JournalView(String name)
+	{
+		super(name);
+		
+		
+	}
 	//JournalView(String name, Journal journal, int width, int height)
 	JournalView(String name, int width, int height)
 	{
@@ -29,7 +36,7 @@ public class JournalView extends FlexComponent{
 		 
 		//this.journal = journal;
 		
-		this.indexPageView = new JournalIndexPageView( width, height);
+		//this.indexPageView = new JournalIndexPageView( width, height);
 		
 		/*//not needed
 		if(this.journal.getFirstRun())

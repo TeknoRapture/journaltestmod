@@ -17,6 +17,7 @@ import java.util.stream.Stream;
 import org.gotti.wurmunlimited.modloader.classhooks.HookManager;
 
 import com.wurmonline.client.renderer.gui.JournalView;
+import com.wurmonline.client.renderer.gui.JournalPageView;
 import com.wurmonline.client.renderer.gui.JournalWindow;
 import com.wurmonline.client.resources.*;
 
@@ -48,11 +49,12 @@ public class Journal {
 	private static final String INSTRUCTIONSFILE = "instructions.txt"; 
 	private static final String INSTRUCTIONSMAPPING = "text.instructions";
 	private static final String IMAGEICONMAPPING = "images.icons";
-	private static JournalView journalView;
+	private JournalView journalView;
 	
 	
 	public static Resources resources;
 	
+	//Remove, may not be necessary
 	private boolean firstRun = true;
 	/**
 	 * @return firstRun
@@ -141,6 +143,12 @@ public class Journal {
 
 	public void addNewPage() {
 		JournalMod.logger.log(Level.INFO, "addNewPageCalled");
+		
+		JournalPageView journalPage = new JournalPageView();
+		
+		journalView = journalPage;
+		
+		
 	}
 	
 	public void showIndex() {
