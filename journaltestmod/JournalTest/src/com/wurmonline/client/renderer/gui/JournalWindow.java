@@ -30,13 +30,14 @@ public class JournalWindow extends WWindow  {
 	private Journal journal;
 	private BufferedImage iconImage;
 
-	private static int ViewWidth = 400;
-	private static int ViewHeight = 500;
+	public static int ViewWidth = 400;
+	public static int ViewHeight = 500;
 	private static int ButtonWidth = 67;
 	private static int ButtonBorderW = 6;
 	private static int ButtonHeight = 30;
 	//TODO: TOO MANY STATICS!!!
 	
+	static JournalView journalView = new JournalView("Journal",ViewWidth,ViewHeight);
 	
 	public JournalWindow()
 	{
@@ -45,7 +46,7 @@ public class JournalWindow extends WWindow  {
 		mainPanel = new WurmBorderPanel("Journal");
 		
 		//JournalView journalView = new JournalView("Journal",ViewWidth,ViewHeight);
-		JournalView journalView = new JournalView("Journal",ViewWidth,ViewHeight);
+		
 		
 		this.journal = new Journal(journalView);
 		
@@ -113,6 +114,17 @@ public class JournalWindow extends WWindow  {
 		//add the components and "View" to the panel
         //*
         
+        
+        /*//TEST BEGIN ********************************************
+        WurmArrayPanel<WurmLabel> testpanel = new WurmArrayPanel<WurmLabel>("test",WurmArrayPanel.DIR_VERTICAL);
+		WurmLabel testLabel = new WurmLabel("Index Page","Test Index Page");
+		
+		testpanel.addComponent(testLabel);
+		
+		journalView.setComponent(testpanel, WurmBorderPanel.CENTER);
+        *///TEST END ************************************************
+		
+		
         mainPanel.setComponent(journalView, WurmBorderPanel.CENTER);
 		mainPanel.setComponent(buttons, WurmBorderPanel.WEST);
 		

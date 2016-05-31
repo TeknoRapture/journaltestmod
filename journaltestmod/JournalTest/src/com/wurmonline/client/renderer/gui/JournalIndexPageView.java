@@ -16,13 +16,13 @@ import com.wurmonline.client.GameCrashedException;
 import tk.teknorapture.wurmunlimited.clientmods.journal.Journal;
 import tk.teknorapture.wurmunlimited.clientmods.journal.JournalMod;
 
-public class JournalIndexPageView extends FlexComponent {
+public class JournalIndexPageView extends WurmBorderPanel {
 
 	Journal journal;
-	WurmArrayPanel mainPagePanel;//main panel of the page
+	//WurmArrayPanel mainPanel = new WurmArrayPanel<WurmLabel>("Journal Index", WurmArrayPanel.DIR_VERTICAL);//main panel of the page
 	static String pagename = "JournalIndexPage";
 	
-	
+/*	
 	private static final class JournalIndexListItem extends TreeListItem
 	{
 		private final String indexItemName;
@@ -62,12 +62,12 @@ public class JournalIndexPageView extends FlexComponent {
 		      {
 		      case 0: 
 		    	  return "not used";
-		      } */
+		      } // * /
 			return "not used";
 		}
 		
 	}
-	
+	*/
 	
 	
 	/**
@@ -80,9 +80,7 @@ public class JournalIndexPageView extends FlexComponent {
 	 */
 	//public JournalIndexPageView(int width, int height, Journal journal) {
 	public JournalIndexPageView(int width, int height) {
-		super(pagename);//name may have to be the same as parent???
-
-		//this.journal = journal;//not needed
+		super("Journal Index");
 		
 		setInitialSize(width,height,false);
 		
@@ -90,19 +88,16 @@ public class JournalIndexPageView extends FlexComponent {
 		{
 			sizeFlags= FlexComponent.FIXED_WIDTH | FlexComponent.FIXED_HEIGHT;// I wish there was a "fill available space" hopefully default is that...
 		}
+
+		WurmArrayPanel<FlexComponent> mainPanel = new WurmArrayPanel<FlexComponent>("Index",WurmArrayPanel.DIR_VERTICAL);
 		
+		WurmLabel testLabel = new WurmLabel("Index Page Not Implemented","Test Index Page");
 		
-		//Initialize the file structure
-		/*
-		if(this.journal.getFirstRun())//not needed
-		{
-			//this.journal.InitFileStructure();
-		}
-		*/
+		mainPanel.addComponent(testLabel);
 		
-		//set up main journal page panel, TODO: Put in separate class?  Probably not, each "page's" layout is pretty different.
-		WurmArrayPanel<FlexComponent> mainPagePanel = new WurmArrayPanel(pagename, WurmArrayPanel.DIR_VERTICAL);
+		this.setComponent(mainPanel, WurmBorderPanel.CENTER);
 		
+		this.layout();
 		
 	}
 

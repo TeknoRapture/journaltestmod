@@ -17,7 +17,10 @@ import java.util.stream.Stream;
 import org.gotti.wurmunlimited.modloader.classhooks.HookManager;
 
 import com.wurmonline.client.renderer.gui.JournalView;
+import com.wurmonline.client.renderer.gui.JournalIndexPageView;
 import com.wurmonline.client.renderer.gui.JournalPageView;
+import com.wurmonline.client.renderer.gui.JournalSearchNIWindow;
+import com.wurmonline.client.renderer.gui.JournalSearchView;
 import com.wurmonline.client.renderer.gui.JournalWindow;
 import com.wurmonline.client.resources.*;
 
@@ -70,6 +73,7 @@ public class Journal {
 		this.firstRun = firstRun;
 	}
 	
+	@SuppressWarnings("unused")
 	private Journal()
 	{
 
@@ -144,9 +148,9 @@ public class Journal {
 	public void addNewPage() {
 		JournalMod.logger.log(Level.INFO, "addNewPageCalled");
 		
-		JournalPageView journalPage = new JournalPageView();
+		JournalPageView journalPage = new JournalPageView(JournalWindow.ViewWidth,JournalWindow.ViewHeight);
 		
-		journalView = journalPage;
+		journalView.setPage(journalPage);
 		
 		
 	}
@@ -154,17 +158,29 @@ public class Journal {
 	public void showIndex() {
 		
 		JournalMod.logger.log(Level.INFO, "showIndexCalled");
+		JournalIndexPageView indexPage = new JournalIndexPageView(JournalWindow.ViewWidth,JournalWindow.ViewHeight);
+		
+		journalView.setPage(indexPage);
 		
 	}
 	
 	public void showSearch() {
 		JournalMod.logger.log(Level.INFO, "showSearchCalled");
 		
+		/*
+		JournalSearchNIWindow NIPopup = new JournalSearchNIWindow();
+		NIPopup.setPosition(200, 200);
+		*/
+		JournalSearchView searchView = new JournalSearchView(JournalWindow.ViewWidth,JournalWindow.ViewHeight);
+		journalView.setPage(searchView);
 	}
 	
 	public void showOptions() {
 		JournalMod.logger.log(Level.INFO, "showOptionsCalled");
 		
+		JournalPageView journalPage = new JournalPageView(JournalWindow.ViewWidth,JournalWindow.ViewHeight,"test read page");
+		
+		journalView.setPage(journalPage);
 	}
 	
 	public boolean InitFileStructure(Path journalDataPath, Resources res)
