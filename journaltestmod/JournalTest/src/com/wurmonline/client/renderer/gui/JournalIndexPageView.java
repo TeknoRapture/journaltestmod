@@ -2,7 +2,11 @@
  * 
  */
 package com.wurmonline.client.renderer.gui;
-
+/**
+ * @author Teknorapture
+ * @email teknorapture@gmail.com
+ * Index Page View
+ */
 import java.util.logging.Level;
 
 import com.wurmonline.client.GameCrashedException;
@@ -27,8 +31,6 @@ public class JournalIndexPageView extends WurmBorderPanel {
 	{
 		private final String indexItemName;
 		private final String description;
-		
-		
 		
 		JournalIndexListItem(String name, String description){
 			indexItemName = name;
@@ -98,7 +100,6 @@ public class JournalIndexPageView extends WurmBorderPanel {
 		this.setComponent(mainPanel, WurmBorderPanel.CENTER);
 		
 		this.layout();
-		
 	}
 
 	private void testTreeList(WurmArrayPanel<FlexComponent> indexView)

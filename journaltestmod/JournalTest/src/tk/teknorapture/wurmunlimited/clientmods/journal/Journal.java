@@ -38,20 +38,22 @@ import java.nio.file.*;
  * @email teknorapture@gmail.com
  */
 
-
+//Main code behind the Journal mod
 public class Journal {
 
 	public static final boolean RESIZABLE = false;
-	//public static final String
 	
-	private static Path journalDataPath;
-	private static Path journalModFolderPath;
+	
+	
+	//Too many statics GRRRRRR!!!
+	public static Path journalDataPath;
+	public static Path journalModFolderPath;
 	public static final String MODFILENAME = "journal.jar";
 	
 	private static final boolean DEBUG = true;
 	private static final String INSTRUCTIONSFILE = "instructions.txt"; 
-	private static final String INSTRUCTIONSMAPPING = "text.instructions";
-	private static final String IMAGEICONMAPPING = "images.icons";
+	public static final String INSTRUCTIONSMAPPING = "text.instructions";
+	public static final String IMAGEICONMAPPING = "images.icons";
 	private JournalView journalView;
 	
 	
@@ -91,7 +93,6 @@ public class Journal {
 		List<String> packNames = new ArrayList<String>();
 		packNames.add(MODFILENAME);
 		resources = getResources(getJournalModFolderPath(),packNames);
-		//File aPackDir,List<String> packNames
 		
 		InitFileStructure(getJournalDataPath(),resources);
 		
@@ -183,6 +184,7 @@ public class Journal {
 		journalView.setPage(journalPage);
 	}
 	
+	//TODO: Move to data layer?
 	public boolean InitFileStructure(Path journalDataPath, Resources res)
 	{
 		/*/// TEST *************************************************************************************************
@@ -229,7 +231,7 @@ public class Journal {
 				}
 				
 				//load Instructions
-				boolean instructionsOK = writeInstructionsAsset(journalDataPath, res, this.INSTRUCTIONSMAPPING);
+				boolean instructionsOK = writeInstructionsAsset(journalDataPath, res, INSTRUCTIONSMAPPING);
 				//List<String> lines = LoadInstructionsAsset();
 				
 				//and dump instructions .jrn (a standard .txt)
@@ -278,6 +280,7 @@ public class Journal {
 		return journalDataPath;
 	}
 	
+	//TODO: Move to Data Layer?
 	//writes Instructions from resource
 	private boolean writeInstructionsAsset(Path journalDataPath, Resources res, String instructionsAssetMapping) {
 		JournalMod.logger.log(Level.INFO,"Writing Instructions file to " + journalDataPath);
@@ -331,6 +334,7 @@ public class Journal {
 		return true;
 	}
 	
+	//TODO: Move to Data Layer?
 	private void LogJarPaths(String pathToScan, String pathToJar) {
 		
 
@@ -382,6 +386,7 @@ public class Journal {
 		}
 	}
 	
+	//TODO: Move to Data Layer?
 	private void TestResources(File aPackDir,List<String> packNames)
 	{
 		Logger.getLogger(Journal.class.getName()).log(Level.WARNING,"Only for Test purposes. TestResources() BEGIN");
@@ -435,6 +440,7 @@ public class Journal {
 		Logger.getLogger(Journal.class.getName()).log(Level.WARNING,"Only for Test purposes. TestResources() END");
 	}
 	
+	//TODO: Move to Data Layer?
 	private boolean TestWriteInstructionsAsset() {
 
 		try {
@@ -547,7 +553,7 @@ public class Journal {
 		return false;
 	}
 
-
+	//TODO: Move to Data Layer?
 	private List<String> GenerateTestLines()
 	{
 		List<String> testlines = new ArrayList<String>();
