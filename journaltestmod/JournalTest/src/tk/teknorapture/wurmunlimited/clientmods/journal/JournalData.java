@@ -1,10 +1,22 @@
 package tk.teknorapture.wurmunlimited.clientmods.journal;
-
+/**
+ * @author Teknorapture
+ * @email teknorapture@gmail.com
+ */
+import java.nio.file.Path;
 
 public class JournalData {
 
-	public JournalData() {
-		// TODO Auto-generated constructor stub
+	Path DataPath;
+	Path ModFolderPath;
+	
+	JournalData() {
+		
+	}
+	
+	public JournalData(Path dataPath, Path modFolderPath) {
+		DataPath = dataPath;
+		ModFolderPath = modFolderPath;
 	}
 
 }
