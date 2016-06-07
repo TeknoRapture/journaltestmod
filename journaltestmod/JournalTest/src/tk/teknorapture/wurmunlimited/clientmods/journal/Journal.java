@@ -24,6 +24,8 @@ import com.wurmonline.client.renderer.gui.JournalSearchView;
 import com.wurmonline.client.renderer.gui.JournalWindow;
 import com.wurmonline.client.resources.*;
 
+import tk.teknorapture.wurmunlimited.clientmods.journal.JournalData;
+
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -42,12 +44,12 @@ import java.nio.file.*;
 public class Journal {
 
 	public static final boolean RESIZABLE = false;
-	
+	public static JournalData jData;
 	
 	
 	//Too many statics GRRRRRR!!!
-	public static Path journalDataPath;
-	public static Path journalModFolderPath;
+	private static Path journalDataPath;
+	private static Path journalModFolderPath;
 	public static final String MODFILENAME = "journal.jar";
 	
 	private static final boolean DEBUG = true;
@@ -58,6 +60,7 @@ public class Journal {
 	
 	
 	public static Resources resources;
+	
 	
 	//Remove, may not be necessary
 	private boolean firstRun = true;
@@ -88,6 +91,8 @@ public class Journal {
 		setJournalModFolderPath(Paths.get((Paths.get(".").toAbsolutePath()).toString(),File.separator+"mods"+File.separator+"journal"+File.separator));
 		setJournalDataPath(getJournalDataPath(getJournalModFolderPath()));
 		
+		///TODO: Refactor Data stuff to data class
+		
 		this.journalView  = journalView;
 		
 		List<String> packNames = new ArrayList<String>();
@@ -96,6 +101,9 @@ public class Journal {
 		
 		InitFileStructure(getJournalDataPath(),resources);
 		
+		jData = new JournalData(getJournalModFolderPath(),getJournalDataPath());
+		
+		showIndex();
 	}
 	
 	/**
